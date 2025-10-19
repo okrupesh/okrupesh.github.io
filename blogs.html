@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blogs — Rupesh Dubey</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto+Slab:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" href="https://avatars.githubusercontent.com/u/203206227?v=4" />
+    <style>
+      :root { --accent: #18A999; }
+      * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Roboto Slab", serif; color: #fff; }
+      body {
+        min-height: 100vh;
+        background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(assets/background.jpg?v=0);
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        overflow-x: hidden;
+      }
+      a { color: var(--accent); text-decoration: none; }
+      .container { max-width: 1100px; margin: 48px auto; padding: 24px; }
+      .top { display:flex; align-items:center; justify-content:space-between; gap:16px; }
+      .brand { display:flex; align-items:center; gap:12px; }
+      .brand h1 { font-family: "Bebas Neue", cursive; font-size: 3.6rem; letter-spacing: 1px; }
+      .nav { display:flex; gap:12px; align-items:center; }
+      .nav a { background: rgba(255,255,255,0.03); padding:8px 12px; border-radius:6px; }
+      .grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:20px; margin-top: 28px; }
+      .card { background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.04); padding:16px; border-radius: 8px; min-height: 140px; display:flex; flex-direction:column; gap:8px; }
+      .card h3 { font-size: 1.3rem; }
+      .card p { color: #dcdcdc; font-size: 0.95rem; }
+      .meta { margin-top:auto; display:flex; justify-content:space-between; align-items:center; font-size:0.9rem; color:#cfcfcf; }
+      .c1anvas { position: fixed; width: 100%; height: 100vh; pointer-events: none; z-index: 999; }
+      @media (max-width:900px){ .brand h1 { font-size:2.4rem; } .container { padding: 12px; } }
+    </style>
+  </head>
+  <body>
+    <canvas class="c1anvas" id="canvas"></canvas>
+    <div class="container">
+      <div class="top">
+        <div class="brand">
+          <img src="assets/me.gif" alt="me" style="width:56px;height:56px;border-radius:8px;object-fit:cover;" />
+          <h1>Blogs</h1>
+        </div>
+        <div class="nav">
+          <a href="index.html">Home</a>
+        </div>
+      </div>
+
+      <div class="grid" id="blogsGrid">
+        <!-- Placeholder cards (replace with links to files in /blogs/*.html) -->
+        <article class="card">
+          <h3 class="no-math">Why &#36;1 Today Is Not Worth &#36;1 Tomorrow?</h3>
+          <p>Explore the time value of money, yield curves, and rate mechanics with teal-highlighted formulas.</p>
+          <div class="meta"><span>Oct 19, 2025</span><a href="blogs/time-value-of-money.html">Read</a></div>
+        </article>
+      </div>
+    </div>
+
+    <script>
+      // Reuse the same grain script as the main page
+      var canvas = document.getElementById('canvas');
+      var viewWidth, viewHeight, ctx, patternCanvas, patternCtx, patternData;
+      var patternSize = 64, patternScaleX = 2, patternScaleY = 2, patternRefreshInterval = 6, patternAlpha = 18;
+      var patternPixelDataLength = patternSize * patternSize * 4, frame = 0;
+      function initCanvas(){ viewWidth = canvas.width = canvas.clientWidth; viewHeight = canvas.height = canvas.clientHeight; ctx = canvas.getContext('2d'); ctx.scale(patternScaleX, patternScaleY); }
+      function initGrain(){ patternCanvas = document.createElement('canvas'); patternCanvas.width = patternSize; patternCanvas.height = patternSize; patternCtx = patternCanvas.getContext('2d'); patternData = patternCtx.createImageData(patternSize, patternSize); }
+      function update(){ for(var t,a=0;a<patternPixelDataLength;a+=4){ t = (255 * Math.random())|0; patternData.data[a]=t; patternData.data[a+1]=t; patternData.data[a+2]=t; patternData.data[a+3]=patternAlpha; } patternCtx.putImageData(patternData,0,0); }
+      function draw(){ ctx.clearRect(0,0,viewWidth,viewHeight); ctx.fillStyle = ctx.createPattern(patternCanvas, 'repeat'); ctx.fillRect(0,0,viewWidth,viewHeight); }
+      function loop(){ ++frame % patternRefreshInterval == 0 && (update(), draw()); requestAnimationFrame(loop); }
+      window.onload = function(){ initCanvas(); initGrain(); requestAnimationFrame(loop); };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="alternate" hreflang="x-default" href="/" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto+Slab:wght@400;500&display=swap" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Rupesh Dubey's personal page." />
+    <title>Rupesh Dubey</title>
+
+    <meta property="og:title" content="Rupesh Dubey" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Rupesh Dubey" />
+
+    <meta charset="UTF-8" />
+  <link rel="icon" href="https://avatars.githubusercontent.com/u/203206227?v=4" />
+    <style>
+      :root { --accent: #18A999; }
+
+      .invert-d:hover {
+        background-color: white;
+        color: black;
+      }
+      .mobcsss {
+        display: none;
+      }
+      @media only screen and (min-width: 900px) {
+        .mobcsss {
+          display: block;
+        }
+        .bsssb {
+          display: none;
+        }
+      }
+      .aa,
+      a {
+        text-decoration: none;
+      }
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+        font-family: "Roboto Slab", serif;
+        user-select: none;
+        transition: 0.05s ease-out;
+      }
+      a {
+        color: var(--accent);
+      }
+      .aa,
+      body {
+        color: #fff;
+      }
+      body {
+        width: 100%;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(assets/background.jpg?v=0);
+        background-color: black;
+        overflow-x: hidden;
+      }
+      .hello {
+        width: 21vw;
+        margin-top: 170px;
+      }
+      .intro-para {
+        display: inline;
+        font-family: "Bebas Neue", cursive;
+        font-weight: 700;
+        line-height: 90%;
+        font-size: 9vw;
+      }
+      .intro-para-line,
+      .intro-para-line-custom {
+        display: inline;
+        font-family: "Roboto Slab", serif;
+        font-weight: 500;
+        font-size: 2.7vw;
+      }
+      .intro-para-line-custom {
+        text-decoration: none;
+        background-image: linear-gradient(to right, var(--accent), var(--accent));
+        background-size: cover;
+      }
+      .aa {
+        background-position: bottom left;
+        background-repeat: no-repeat;
+        background-size: 100% 0;
+        transition: background-size 0.5s;
+      }
+      .aa:hover {
+        background-color: var(--accent);
+      }
+      .project-card {
+        max-width: 100%;
+        max-height: 420px;
+        width: auto;
+        height: auto;
+      }
+      .c1anvas {
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 999;
+      }
+      .connect,
+      .photo {
+        position: absolute;
+      }
+      .left {
+        width: 100%;
+        padding-left: 160px;
+        padding-right: 160px;
+      }
+      .photo {
+        margin-top: 200px; /* moved up by 0.5x of last step */
+        margin-left: 5.5vw; /* 0.5x left */
+        transform: translateX(76%) translateY(14%); /* 0.5x left */
+        z-index: -3;
+        width: 22vw; /* slightly smaller */
+      }
+      .under {
+        display: none;
+        background-color: #fff;
+        color: #000;
+        font-size: 20px;
+      }
+      .under-img {
+        margin-top: 10px;
+        margin-left: 10px;
+        height: 60px;
+      }
+      .connect {
+        max-width: 400px;
+        width: 100%;
+        z-index: -03;
+        top: 0;
+      }
+      .buffer {
+        height: 500px;
+        width: 12px;
+        background-color: var(--accent);
+        margin-bottom: -40px;
+        margin-top: 40px;
+      }
+      .contact-div {
+        position: relative;
+        display: table-cell;
+        vertical-align: bottom;
+        height: 400px;
+      }
+      @media only screen and (max-width: 900px) {
+        .intro-para {
+          display: inline;
+          font-family: "Bebas Neue", cursive;
+          font-weight: 700;
+          font-size: 21vw;
+        }
+        .left {
+          position: relative;
+          padding-left: 10px;
+          padding-right: 10px;
+          overflow-x: hidden;
+        }
+        .buffer {
+          height: 100px;
+        }
+        .photo {
+          position: absolute;
+          margin-left: 2%; /* 0.5x left on mobile */
+          margin-top: 200px; /* moved up by 0.5x of last step */
+          width: 76%;
+          height: auto;
+          transform: translateX(63%) translateY(10.5%);
+        }
+        .hello {
+          width: 54%;
+          margin-top: 120px;
+        }
+        .intro-para-line {
+          display: inline;
+          font-family: "Roboto Slab", serif;
+          font-weight: 500;
+          font-size: 9vw;
+        }
+        .intro-para-line-custom {
+          font-size: 9vw;
+        }
+      }
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background-color: #000;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #aaaaaa;
+      }
+      .zson-bg {
+        background-image: url(images/img1.png), url(assets/zson-eyes.gif), linear-gradient(#ee4d60, #ee4d60);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      .dc {
+      }
+      img {
+        pointer-events: none; /* hehe */
+      }
+      .xxx-d {
+        display: inline-block;
+      }
+
+      @keyframes blink {
+        0% {
+          background-color: white;
+          color: black;
+        }
+        50% {
+          background-color: transparent;
+          color: var(--accent);
+        }
+        100% {
+          background-color: white;
+          color: black;
+        }
+      }
+      .blink {
+        transition: all 0s ease;
+
+        animation: blink 1s steps(1, end) infinite;
+      }
+      @keyframes rotate-steps {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(-360deg);
+        }
+      }
+      .rotate-star {
+        animation: rotate-steps 5s steps(15) infinite;
+        opacity: 0.9;
+      }
+
+      /* Shift the main site content up as a single group without altering spacing/layout */
+      .site-shift {
+        transform: translateY(-6vh) scale(0.92);
+        transform-origin: top center;
+        transition: transform 0.15s ease;
+      }
+
+      @media only screen and (max-width: 900px) {
+        .site-shift {
+          transform: translateY(-5vh) scale(0.94);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div style="position: fixed; bottom: 0; right: 10px; width: 100%; padding: 10px; font-size: 20px; color: #fff; background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)); z-index: 998; opacity: 1; pointer-events: none; height: 200px"></div>
+
+    <img src="assets/main1.jpg" alt="hidden image" style="display: none" />
+
+    <canvas class="c1anvas" id="canvas"></canvas>
+    <div class="site-shift">
+      <div class="left">
+        <img src="assets/hello.png" alt="image saying hello" class="hello" />
+        <img src="assets/me.gif" alt="photo of Rupesh Dubey" class="photo" id="photoid" /> <br />
+        <h1 class="intro-para">You've Reached <br />RUPESH DUBEY.</h1>
+        <br />
+        <p class="intro-para-line">He's a</p>
+        <p class="intro-para-line-custom">&nbsp;full stack pythoи developer</p>
+        &nbsp;
+        <p class="intro-para-line">
+          <img src="assets/all-rounder.png" alt="and an all-rounder" style="height: 1em" />
+          aиd is based iи Iиdia.
+        </p>
+        <br />
+
+        <p class="intro-para-line" style="font-size: 32px">
+          <a target="_self" href="blogs.html" class="invert-d dc">[blog]</a>
+          <a target="_blank" href="https://github.com/okrupesh" class="invert-d dc">[github]</a>
+          <a target="_blank" href="mailto:contactrupeshdubey@gmail.com" class="invert-d dc blink">[hire me]</a>
+          <a target="_blank" href="https://www.linkedin.com/in/okrupesh/" class="invert-d dc">[linkedin]</a>
+        </p>
+
+      </div>
+    </div>
+    <script>
+      // grain effect source: https://codepen.io/zadvorsky/pen/PwyoMm
+      console.log("Hello world");
+
+      const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+      document.addEventListener("scroll", function () {
+        var scrollPosition = window.scrollY || window.pageYOffset;
+        var element = document.querySelector(".zson-bg");
+        if (!element) return;
+
+        var elementRect = element.getBoundingClientRect();
+        var xh = (vh - elementRect.top) / vh;
+        xh = xh * 15;
+        xh = xh - 10;
+        element.style.backgroundPosition = `center, center ${xh}px, center`;
+      });
+
+      var viewWidth,
+        viewHeight,
+        ctx,
+        patternCanvas,
+        patternCtx,
+        patternData,
+        canvas = document.getElementById("canvas"),
+        patternSize = 64,
+        patternScaleX = 2,
+        patternScaleY = 2,
+        patternRefreshInterval = 6,
+        patternAlpha = 18,
+        patternPixelDataLength = patternSize * patternSize * 4,
+        frame = 0;
+      function initCanvas() {
+        (viewWidth = canvas.width = canvas.clientWidth), (viewHeight = canvas.height = canvas.clientHeight), (ctx = canvas.getContext("2d")).scale(patternScaleX, patternScaleY);
+      }
+      function initGrain() {
+        ((patternCanvas = document.createElement("canvas")).width = patternSize), (patternCanvas.height = patternSize), (patternData = (patternCtx = patternCanvas.getContext("2d")).createImageData(patternSize, patternSize));
+      }
+      function update() {
+        for (var t, a = 0; a < patternPixelDataLength; a += 4) (t = (255 * Math.random()) | 0), (patternData.data[a] = t), (patternData.data[a + 1] = t), (patternData.data[a + 2] = t), (patternData.data[a + 3] = patternAlpha);
+        patternCtx.putImageData(patternData, 0, 0);
+      }
+      function draw() {
+        ctx.clearRect(0, 0, viewWidth, viewHeight), (ctx.fillStyle = ctx.createPattern(patternCanvas, "repeat")), ctx.fillRect(0, 0, viewWidth, viewHeight);
+      }
+      function loop() {
+        ++frame % patternRefreshInterval == 0 && (update(), draw()), requestAnimationFrame(loop);
+      }
+      window.onload = function () {
+        initCanvas(), initGrain(), requestAnimationFrame(loop);
+      };
+    </script>
+  </body>
+</html>
