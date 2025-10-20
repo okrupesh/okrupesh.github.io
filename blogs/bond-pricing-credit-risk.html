@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bond Pricing &amp; Credit Risk — Rupesh Dubey</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto+Slab:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/203206227?v=4" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+      onload="renderMathInElement(document.body, { delimiters: [ { left: '$$', right: '$$', display: true }, { left: '$', right: '$', display: false }, { left: '\\(', right: '\\)', display: false }, { left: '\\[', right: '\\]', display: true } ], throwOnError: false, ignoredClasses: ['no-math'] });"
+    ></script>
+    <style>
+      :root { --accent: #18A999; }
+      * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Roboto Slab", serif; color: #fff; }
+      body {
+        min-height: 100vh;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(../assets/background.jpg?v=0);
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        overflow-x: hidden;
+      }
+      a { color: var(--accent); text-decoration: none; }
+      .wrap { max-width: 920px; margin: 48px auto; padding: 32px 24px; background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)); border-radius: 12px; backdrop-filter: blur(2px); }
+      .nav { display: flex; gap: 12px; margin-bottom: 28px; }
+      .nav a { background: rgba(255, 255, 255, 0.05); padding: 8px 14px; border-radius: 8px; }
+      h1, h2 { font-family: "Bebas Neue", cursive; color: var(--accent); letter-spacing: 1px; }
+      h1 { font-size: 3.3rem; margin-bottom: 10px; }
+      h2 { font-size: 2rem; margin: 28px 0 14px; }
+      h3 { font-size: 1.35rem; margin: 24px 0 12px; color: #fff; }
+      p { line-height: 1.7; margin-bottom: 18px; font-size: 1.06rem; color: #fff; }
+      ul { margin: 0 0 18px 24px; line-height: 1.7; font-size: 1.04rem; }
+      ol { margin: 0 0 18px 24px; line-height: 1.7; font-size: 1.04rem; }
+      li { margin-bottom: 8px; }
+      strong {
+        font-weight: 400;
+        background: var(--accent);
+        color: #fff;
+        padding: 0 6px;
+        border-radius: 4px;
+        display: inline;
+      }
+      em { color: #e6e6e6; }
+      .meta { color: #cfcfcf; margin-bottom: 24px; font-size: 0.95rem; }
+      blockquote { border-left: 3px solid var(--accent); padding-left: 16px; color: #f2f2f2; margin: 18px 0; }
+      .katex { color: var(--accent); fill: var(--accent); }
+      .katex * { color: var(--accent) !important; }
+      .c1anvas { position: fixed; width: 100%; height: 100vh; pointer-events: none; z-index: 999; }
+      ::-webkit-scrollbar { width: 10px; }
+      ::-webkit-scrollbar-track { background-color: #000; }
+      ::-webkit-scrollbar-thumb { background: #aaaaaa; }
+    </style>
+  </head>
+  <body>
+    <div style="position: fixed; bottom: 0; right: 10px; width: 100%; padding: 10px; font-size: 20px; color: #fff; background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)); z-index: 998; opacity: 1; pointer-events: none; height: 200px"></div>
+    <canvas class="c1anvas" id="canvas"></canvas>
+    <div class="wrap">
+      <div class="nav">
+        <a href="../blogs.html">← Back to Blogs</a>
+        <a href="../index.html">Home</a>
+      </div>
+
+      <h1>How Do You Price a Bond and Why Is Credit Risk the Biggest Threat?</h1>
+      <p class="meta">By Rupesh Dubey (MScFE Candidate) · Published Oct 20, 2025</p>
+
+      <h2>Discounting: The Core of Bond Pricing</h2>
+  <p>A bond is a debt security where the issuer promises to pay the bondholder periodic <strong>coupon payments</strong> and return the <strong>principal (par value)</strong> at a specified maturity date.</p>
+  <p>To find out what a bond is worth today, we use the <strong>Time Value of Money (TVM)</strong> principle to calculate the <strong>Present Value (PV)</strong> of all the future cash flows. This process is called <strong>discounting</strong>, and it relies on the prevailing market interest rate, known as the <strong>discount rate (r)</strong>.</p>
+      <p>The formula for pricing a bond is:</p>
+      <p>$$
+        \text{Bond Price} = \sum_{i=1}^{T} \frac{\text{CF}_{i}}{(1 + r)^{i}}
+      $$</p>
+      <p>Where:</p>
+      <ul>
+        <li>\( \text{CF}_i \) is the cash flow (coupon or principal) at time \( i \)</li>
+        <li>\( r \) is the discount rate</li>
+        <li>\( T \) is the number of periods until maturity</li>
+      </ul>
+
+      <h3>The Inverse Relationship and Yield to Maturity (YTM)</h3>
+  <p>One of the most important principles in bond pricing is that <strong>bond prices move inversely to interest rates</strong>. When market rates rise, existing bonds fall in value because new issues offer higher returns, making older bonds with lower <strong>coupon rates</strong> less attractive.</p>
+  <p>If a bond’s <strong>coupon rate</strong> is lower than the market <strong>discount rate</strong>, it must trade <strong>below par</strong> (at a discount) to attract investors.</p>
+  <p>The <strong>Yield to Maturity (YTM)</strong> is the <strong>discount rate</strong> that equates a bond’s current market price to the present value of all its future cash flows. It represents the effective annual rate of return an investor earns if the bond is held until maturity.</p>
+
+      <h2>Credit Risk: The Greatest Threat to Lenders</h2>
+      <p>In the world of fixed income, the biggest uncertainty comes from <strong>credit risk</strong> — the possibility that a borrower (the bond issuer) may fail to make payments of interest or principal in full and on time.</p>
+
+      <h3>Default and Risk Premium</h3>
+  <p>A <strong>default</strong> occurs when the borrower fails to meet these obligations. If an issuer’s financial condition weakens or its <strong>credit rating</strong> is downgraded, the price of its bonds will fall because investors demand a higher <strong>risk premium</strong> to compensate for greater uncertainty.</p>
+      <p>This is why <strong>corporate bonds</strong> typically offer higher yields than <strong>government bonds</strong>, which are generally considered risk-free.</p>
+      <p>To reduce credit risk, loans and some bonds are often secured by <strong>collateral</strong> — assets that lenders can claim if the borrower defaults.</p>
+
+      <h2>Institutional Protections and Market Structure</h2>
+      <p>Several mechanisms help protect investors and reduce credit risk in financial markets:</p>
+      <ul>
+        <li><strong>Deposit insurance</strong> (such as the FDIC in the United States) guarantees deposits up to a certain limit, protecting small depositors from losses if a bank fails.</li>
+        <li><strong>Centralized exchanges</strong> act as intermediaries and guarantee the completion of trades, virtually eliminating <em>counterparty credit risk</em>.</li>
+        <li>In contrast, <strong>over-the-counter (OTC)</strong> markets involve direct trading between parties, meaning credit risk remains a concern because there is no central guarantor.</li>
+      </ul>
+
+      <h2>Short Selling: Profiting from Overvaluation</h2>
+  <p><strong>Short selling</strong> is a trading strategy used by investors who believe a security’s price is too high and will fall. It reverses the usual sequence of “buy low, sell high” into <strong>“sell high, then buy low.”</strong></p>
+      <p>Here is how it works:</p>
+      <ol>
+        <li>Borrow a security (such as a bond) that you do not own.</li>
+        <li>Sell the borrowed security in the market at the current price.</li>
+        <li>Wait for the price to fall.</li>
+        <li>Buy it back at the lower price.</li>
+        <li>Return the security to the original lender.</li>
+      </ol>
+      <p>The difference between the selling and buying prices (minus any costs) is the trader’s profit. However, short selling is risky because the potential loss is unlimited if the price rises instead of falling.</p>
+      <p>Despite the risks, short selling plays an important role in keeping markets efficient by preventing assets from becoming overvalued.</p>
+
+      <h2>Market Participants: Buy-Side and Sell-Side</h2>
+      <p>The financial markets are broadly divided into two major groups:</p>
+      <ul>
+  <li><strong>Buy-side:</strong> Institutions such as hedge funds, pension funds, and mutual funds that invest capital on behalf of clients. Their goal is to generate returns, often earning both fixed and performance-based fees.</li>
+  <li><strong>Sell-side:</strong> Firms such as investment banks and brokerages that provide market-making and advisory services. They continuously quote prices to both buy (the <strong>bid</strong>) and sell (the <strong>ask</strong>) securities, earning profits from the <strong>bid-ask spread</strong>.</li>
+      </ul>
+      <p>Together, the buy-side and sell-side form the structure that keeps financial markets functioning smoothly.</p>
+
+      <h2>Conclusion</h2>
+      <p>The value of a bond is ultimately the <strong>present value of its future cash flows</strong>. While this idea seems simple, it is constantly tested by the ever-present threat of <strong>credit risk</strong>.</p>
+      <p>Managing credit risk lies at the heart of every fixed income decision: from loan structuring to market trading. Even strategies like short selling and credit derivatives exist largely to help measure, manage, or profit from this central risk of lending.</p>
+    </div>
+    <script>
+      // same grain overlay used across the portfolio for consistency
+      const canvas = document.getElementById("canvas");
+      let viewWidth,
+        viewHeight,
+        ctx,
+        patternCanvas,
+        patternCtx,
+        patternData,
+        frame = 0;
+      const patternSize = 64,
+        patternScaleX = 2,
+        patternScaleY = 2,
+        patternRefreshInterval = 6,
+        patternAlpha = 18,
+        patternPixelDataLength = patternSize * patternSize * 4;
+
+      function initCanvas() {
+        viewWidth = canvas.width = canvas.clientWidth;
+        viewHeight = canvas.height = canvas.clientHeight;
+        ctx = canvas.getContext("2d");
+        ctx.scale(patternScaleX, patternScaleY);
+      }
+
+      function initGrain() {
+        patternCanvas = document.createElement("canvas");
+        patternCanvas.width = patternSize;
+        patternCanvas.height = patternSize;
+        patternCtx = patternCanvas.getContext("2d");
+        patternData = patternCtx.createImageData(patternSize, patternSize);
+      }
+
+      function update() {
+        for (let i = 0; i < patternPixelDataLength; i += 4) {
+          const value = (Math.random() * 255) | 0;
+          patternData.data[i] = value;
+          patternData.data[i + 1] = value;
+          patternData.data[i + 2] = value;
+          patternData.data[i + 3] = patternAlpha;
+        }
+        patternCtx.putImageData(patternData, 0, 0);
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, viewWidth, viewHeight);
+        ctx.fillStyle = ctx.createPattern(patternCanvas, "repeat");
+        ctx.fillRect(0, 0, viewWidth, viewHeight);
+      }
+
+      function loop() {
+        if (++frame % patternRefreshInterval === 0) {
+          update();
+          draw();
+        }
+        requestAnimationFrame(loop);
+      }
+
+      window.addEventListener("load", () => {
+        initCanvas();
+        initGrain();
+        requestAnimationFrame(loop);
+      });
+      window.addEventListener("resize", initCanvas);
+    </script>
+  </body>
+</html>
