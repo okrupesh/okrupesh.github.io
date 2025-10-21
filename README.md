@@ -5,9 +5,8 @@ Static site presenting my personal landing page alongside a small collection of 
 ## Project Structure
 - `index.html`: Hero landing page with contact links, accent color theming, and animated grain overlay.
 - `blogs.html`: Blog listing page linking to individual posts.
-- `blogs/time-value-of-money.html`: Article introducing time value of money concepts with KaTeX-rendered formulas.
-- `blogs/bond-pricing-credit-risk.html`: Article covering bond pricing mechanics and credit risk topics.
 - `assets/`: Shared imagery, backgrounds, and icons consumed across the site.
+- `blogs/`: All the individual blog posts.
 
 ## Styling & Effects
 - Inline CSS loads the Bebas Neue and Roboto Slab typefaces and defines the accent palette.
