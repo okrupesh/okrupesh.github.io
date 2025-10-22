@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Stocks vs. Bonds vs. Bitcoin — Rupesh Dubey</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto+Slab:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/203206227?v=4" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+      onload="renderMathInElement(document.body, { delimiters: [ { left: '$$', right: '$$', display: true }, { left: '$', right: '$', display: false }, { left: '\\(', right: '\\)', display: false }, { left: '\\[', right: '\]', display: true } ], throwOnError: false, ignoredClasses: ['no-math'] });"
+    ></script>
+    <style>
+      :root { --accent: #18A999; }
+      * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Roboto Slab", serif; color: #fff; }
+      body {
+        min-height: 100vh;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(../assets/background.jpg?v=0);
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        overflow-x: hidden;
+      }
+      a { color: var(--accent); text-decoration: none; }
+      .wrap { max-width: 920px; margin: 48px auto; padding: 32px 24px; background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)); border-radius: 12px; backdrop-filter: blur(2px); }
+      .nav { display: flex; gap: 12px; margin-bottom: 28px; }
+      .nav a { background: rgba(255, 255, 255, 0.05); padding: 8px 14px; border-radius: 8px; }
+      h1, h2 { font-family: "Bebas Neue", cursive; color: var(--accent); letter-spacing: 1px; }
+      h1 { font-size: 3.2rem; margin-bottom: 10px; }
+      h2 { font-size: 2rem; margin: 28px 0 14px; }
+      h3 { font-size: 1.35rem; margin: 24px 0 12px; color: #fff; }
+      p { line-height: 1.7; margin-bottom: 18px; font-size: 1.06rem; color: #fff; }
+      ul { margin: 0 0 18px 24px; line-height: 1.7; font-size: 1.04rem; }
+      li { margin-bottom: 8px; }
+      table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+      th, td { border: 1px solid rgba(255, 255, 255, 0.2); padding: 10px 12px; text-align: left; font-size: 0.98rem; }
+      th { color: var(--accent); background: rgba(255, 255, 255, 0.05); }
+  .feature-label { color: var(--accent); font-weight: 500; }
+      strong {
+        font-weight: 400;
+        background: var(--accent);
+        color: #fff;
+        padding: 0 6px;
+        border-radius: 4px;
+        display: inline;
+      }
+      em { color: #e6e6e6; }
+      .meta { color: #cfcfcf; margin-bottom: 24px; font-size: 0.95rem; }
+      blockquote { border-left: 3px solid var(--accent); padding-left: 16px; color: #f2f2f2; margin: 18px 0; }
+      .katex { color: var(--accent); fill: var(--accent); }
+      .katex * { color: var(--accent) !important; }
+      .c1anvas { position: fixed; width: 100%; height: 100vh; pointer-events: none; z-index: 999; }
+      ::-webkit-scrollbar { width: 10px; }
+      ::-webkit-scrollbar-track { background-color: #000; }
+      ::-webkit-scrollbar-thumb { background: #aaaaaa; }
+    </style>
+  </head>
+  <body>
+    <div style="position: fixed; bottom: 0; right: 10px; width: 100%; padding: 10px; font-size: 20px; color: #fff; background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)); z-index: 998; opacity: 1; pointer-events: none; height: 200px"></div>
+    <canvas class="c1anvas" id="canvas"></canvas>
+    <div class="wrap">
+      <div class="nav">
+        <a href="../blogs.html">← Back to Blogs</a>
+        <a href="../index.html">Home</a>
+      </div>
+
+      <h1>Stocks vs. Bonds vs. Bitcoin: Where Does Your Investment Stand on the Risk Spectrum?</h1>
+      <p class="meta">By Rupesh Dubey (MScFE Candidate) · Published Oct 22, 2025</p>
+
+      <h2>Stocks: Ownership and Upside</h2>
+      <p><strong>Stocks (or equities)</strong> represent fractional ownership in a corporation. When you buy a share, you own a small part of that company and participate in its future growth.</p>
+      <p>Unlike bondholders, stockholders do not have a contractual guarantee of payments. However, they are entitled to a portion of the company’s profits and assets, usually through <strong>dividends</strong> or <strong>capital appreciation</strong>.</p>
+
+      <h2>Stocks vs. Bonds</h2>
+      <p>The key distinction between stocks and bonds lies in <strong>risk</strong> and <strong>priority of payments</strong>.</p>
+      <ul>
+        <li><strong>Bonds</strong> are a loan made to a company or government. They are recorded as liabilities and must be repaid, making them relatively safer.</li>
+        <li><strong>Stocks</strong> are ownership stakes that are not repaid. Stockholders benefit when the company grows, but they also bear more risk.</li>
+      </ul>
+      <p>If a company goes bankrupt:</p>
+      <ul>
+        <li><strong>Bondholders</strong> are paid first.</li>
+        <li><strong>Stockholders</strong> are paid last, often receiving little or nothing.</li>
+      </ul>
+
+      <h3>Comparison of Key Features</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Stocks</th>
+            <th>Bonds</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="feature-label">Nature</span></td>
+            <td>Ownership (Equity)</td>
+            <td>Loan (Debt)</td>
+          </tr>
+          <tr>
+            <td><span class="feature-label">Payment Type</span></td>
+            <td>Dividends (optional, variable)</td>
+            <td>Coupon payments (fixed, contractual)</td>
+          </tr>
+          <tr>
+            <td><span class="feature-label">Priority in Bankruptcy</span></td>
+            <td>Last</td>
+            <td>First</td>
+          </tr>
+          <tr>
+            <td><span class="feature-label">Return Potential</span></td>
+            <td>Unlimited (capital gains)</td>
+            <td>Limited (fixed interest)</td>
+          </tr>
+          <tr>
+            <td><span class="feature-label">Voting Rights</span></td>
+            <td>Yes</td>
+            <td>No</td>
+        </tbody>
+      </table>
+      <p>Stocks offer <strong>capital appreciation</strong> and potential <strong>dividend income</strong>, while bonds offer <strong>fixed income</strong> and <strong>capital preservation</strong>. In short, stocks are for <strong>growth</strong>, and bonds are for <strong>stability</strong>.</p>
+    
+      <h2>Valuation: The Gordon Growth Model (GGM)</h2>
+      <p>One of the simplest and most widely used models for valuing a stock is the <strong>Dividend Discount Model (DDM)</strong>. It calculates the present value of all expected future dividends.</p>
+      <p>The <strong>Gordon Growth Model (GGM)</strong> is a version of the DDM that assumes dividends grow at a constant rate \( g \) forever. The formula is:</p>
+      <p>$$
+        P_0 = \frac{D_1}{k - g}
+      $$</p>
+      <p>Where:</p>
+      <ul>
+        <li>\( P_0 \) is the current stock price</li>
+        <li>\( D_1 \) is the next expected dividend</li>
+        <li>\( k \) is the required rate of return (cost of equity)</li>
+        <li>\( g \) is the constant dividend growth rate</li>
+      </ul>
+      <p>This model is elegant but limited. It only works for companies that pay regular, predictable dividends and assumes perpetual growth, which may not always be realistic.</p>
+
+      <h2>Cryptocurrencies: Decentralization and Extreme Volatility</h2>    
+      <p>Cryptocurrencies such as <strong>Bitcoin (BTC)</strong> and <strong>Ethereum (ETH)</strong> represent a very different asset class, built on <strong>blockchain technology</strong>: a decentralized, tamper-resistant digital ledger.</p>
+
+      <h3>How Crypto Differs from Traditional Assets</h3>
+      <ol>
+        <li><strong>No intrinsic value:</strong> unlike stocks (which represent ownership) or bonds (which represent debt), most cryptocurrencies have no inherent claim on assets or income. Their value is often based on <strong>market perception</strong>, <strong>adoption</strong>, and <strong>speculation</strong>.</li>
+        <li><strong>Decentralization:</strong> cryptocurrencies are not controlled by any government, company, or central bank.</li>
+        <li><strong>24/7 trading:</strong> crypto markets operate continuously across borders, allowing immediate reaction to global events; but also increasing volatility.</li>
+      </ol>
+
+      <h2>Risk Spectrum: Bitcoin vs. Bonds</h2>
+      <p>Bitcoin and risk-free bonds occupy opposite ends of the <strong>investment risk spectrum</strong>.</p>
+      <ul>
+        <li><strong>Bonds</strong> are the most conservative investments. They offer stable income and principal protection, assuming the issuer remains solvent.</li>
+        <li><strong>Bitcoin</strong> is among the most volatile assets, capable of enormous gains but also sharp declines.</li>
+      </ul>
+      <table>
+        <thead>
+          <tr>
+            <th>Asset</th>
+            <th>Expected Return</th>
+            <th>Typical Volatility</th>
+            <th>Risk Level</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="feature-label">Government Bonds</span></td>
+            <td>Low (2–5%)</td>
+            <td>Very Low</td>
+            <td><strong>Conservative</strong></td>
+          </tr>
+          <tr>
+            <td><span class="feature-label">Corporate Bonds</span></td>
+            <td>Moderate (4–8%)</td>
+            <td>Low to Medium</td>
+            <td><strong>Moderate</strong></td>
+          </tr>
+          <tr>
+            <td><span class="feature-label">Stocks</span></td>
+            <td>Moderate to High (8–15%)</td>
+            <td>Medium to High</td>
+            <td><strong>Growth-Oriented</strong></td>
+          </tr>
+          <tr>
+            <td><span class="feature-label">Bitcoin</span></td>
+            <td>Very High (50%+)</td>
+            <td>Extremely High</td>
+            <td><strong>Speculative</strong></td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Bitcoin can deliver massive upside, even 100% to 1,000% gains.. but it also experiences 40% to 50% drawdowns regularly. Understanding this trade-off is essential before allocating capital.</p>
+
+      <h2>Conclusion: Positioning on the Risk Spectrum</h2>
+      <p>Every investment involves a balance between <strong>risk</strong> and <strong>reward</strong>. Knowing where each asset lies on that spectrum helps investors make informed choices aligned with their goals and risk tolerance.</p>
+      <ul>
+        <li><strong>Bonds</strong> provide stability and steady income.</li>
+        <li><strong>Stocks</strong> offer ownership and long-term growth potential.</li>
+        <li><strong>Cryptocurrencies</strong> deliver the highest potential returns, but also the greatest uncertainty.</li>
+      </ul>
+      <p>In financial engineering and portfolio management, understanding these trade-offs is the foundation of building resilient, diversified investment strategies.</p>
+    </div>
+    <script>
+      // same grain overlay used across the portfolio for consistency
+      const canvas = document.getElementById("canvas");
+      let viewWidth,
+        viewHeight,
+        ctx,
+        patternCanvas,
+        patternCtx,
+        patternData,
+        frame = 0;
+      const patternSize = 64,
+        patternScaleX = 2,
+        patternScaleY = 2,
+        patternRefreshInterval = 6,
+        patternAlpha = 18,
+        patternPixelDataLength = patternSize * patternSize * 4;
+
+      function initCanvas() {
+        viewWidth = canvas.width = canvas.clientWidth;
+        viewHeight = canvas.height = canvas.clientHeight;
+        ctx = canvas.getContext("2d");
+        ctx.scale(patternScaleX, patternScaleY);
+      }
+
+      function initGrain() {
+        patternCanvas = document.createElement("canvas");
+        patternCanvas.width = patternSize;
+        patternCanvas.height = patternSize;
+        patternCtx = patternCanvas.getContext("2d");
+        patternData = patternCtx.createImageData(patternSize, patternSize);
+      }
+
+      function update() {
+        for (let i = 0; i < patternPixelDataLength; i += 4) {
+          const value = (Math.random() * 255) | 0;
+          patternData.data[i] = value;
+          patternData.data[i + 1] = value;
+          patternData.data[i + 2] = value;
+          patternData.data[i + 3] = patternAlpha;
+        }
+        patternCtx.putImageData(patternData, 0, 0);
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, viewWidth, viewHeight);
+        ctx.fillStyle = ctx.createPattern(patternCanvas, "repeat");
+        ctx.fillRect(0, 0, viewWidth, viewHeight);
+      }
+
+      function loop() {
+        if (++frame % patternRefreshInterval === 0) {
+          update();
+          draw();
+        }
+        requestAnimationFrame(loop);
+      }
+
+      window.addEventListener("load", () => {
+        initCanvas();
+        initGrain();
+        requestAnimationFrame(loop);
+      });
+      window.addEventListener("resize", initCanvas);
+    </script>
+  </body>
+</html>
