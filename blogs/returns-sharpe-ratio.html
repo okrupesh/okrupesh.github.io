@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Measuring Performance — Rupesh Dubey</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto+Slab:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/203206227?v=4" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+      onload="renderMathInElement(document.body, { delimiters: [ { left: '$$', right: '$$', display: true }, { left: '$', right: '$', display: false }, { left: '\\(', right: '\\)', display: false }, { left: '\\[', right: '\\]', display: true } ], throwOnError: false, ignoredClasses: ['no-math'] });"
+    ></script>
+    <style>
+      :root { --accent: #18A999; }
+      * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Roboto Slab", serif; color: #fff; }
+      body {
+        min-height: 100vh;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(../assets/background.jpg?v=0);
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        overflow-x: hidden;
+      }
+      a { color: var(--accent); text-decoration: none; }
+      .wrap { max-width: 920px; margin: 48px auto; padding: 32px 24px; background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)); border-radius: 12px; backdrop-filter: blur(2px); }
+      .nav { display: flex; gap: 12px; margin-bottom: 28px; }
+      .nav a { background: rgba(255, 255, 255, 0.05); padding: 8px 14px; border-radius: 8px; }
+      h1, h2 { font-family: "Bebas Neue", cursive; color: var(--accent); letter-spacing: 1px; }
+      h1 { font-size: 3.2rem; margin-bottom: 10px; }
+      h2 { font-size: 2rem; margin: 28px 0 14px; }
+      h3 { font-size: 1.35rem; margin: 24px 0 12px; color: #fff; }
+      p { line-height: 1.7; margin-bottom: 18px; font-size: 1.06rem; color: #fff; }
+      ul { margin: 0 0 18px 24px; line-height: 1.7; font-size: 1.04rem; }
+      li { margin-bottom: 8px; }
+      strong {
+        font-weight: 400;
+        background: var(--accent);
+        color: #fff;
+        padding: 0 6px;
+        border-radius: 4px;
+        display: inline;
+      }
+      em { color: #e6e6e6; }
+      .meta { color: #cfcfcf; margin-bottom: 24px; font-size: 0.95rem; }
+      blockquote { border-left: 3px solid var(--accent); padding-left: 16px; color: #f2f2f2; margin: 18px 0; }
+      .katex { color: var(--accent); fill: var(--accent); }
+      .katex * { color: var(--accent) !important; }
+      .c1anvas { position: fixed; width: 100%; height: 100vh; pointer-events: none; z-index: 999; }
+      ::-webkit-scrollbar { width: 10px; }
+      ::-webkit-scrollbar-track { background-color: #000; }
+      ::-webkit-scrollbar-thumb { background: #aaaaaa; }
+    </style>
+  </head>
+  <body>
+    <div style="position: fixed; bottom: 0; right: 10px; width: 100%; padding: 10px; font-size: 20px; color: #fff; background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)); z-index: 998; opacity: 1; pointer-events: none; height: 200px"></div>
+    <canvas class="c1anvas" id="canvas"></canvas>
+    <div class="wrap">
+      <div class="nav">
+        <a href="../blogs.html">← Back to Blogs</a>
+        <a href="../index.html">Home</a>
+      </div>
+
+      <h1>How to Measure Performance: Arithmetic vs. Log Returns and the Power of the Sharpe Ratio</h1>
+      <p class="meta">By Rupesh Dubey (MScFE Candidate) · Published Oct 25, 2025</p>
+
+      <h2>Calculating Return: Why Your Choice of Math Matters</h2>
+      <p>Return is the fundamental measure of investment performance. However, there are two primary ways to calculate it, and the choice matters greatly for accuracy and modeling.</p>
+
+      <h3>1. Arithmetic (Percent) Return</h3>
+      <p>The <strong>arithmetic return</strong>, also called the simple or percent return, shows the percentage change in price over a given period. It is the most intuitive way investors think about profit or loss.</p>
+      <p>$$
+        \text{Arithmetic Return} = r_{t_1, t_2} = \frac{S_{t_2} - S_{t_1}}{S_{t_1}}
+      $$</p>
+      <p>Where:</p>
+      <ul>
+        <li>\( S_{t_1} \) is the price at the beginning of the period</li>
+        <li>\( S_{t_2} \) is the price at the end of the period</li>
+      </ul>
+
+      <h3>2. Logarithmic (Log) Return</h3>
+      <p><strong>Log returns</strong> use the natural logarithm of the price ratio:</p>
+      <p>$$
+        \text{Logarithmic Return} = \tilde{r}_{t_1, t_2} = \ln\left(\frac{S_{t_2}}{S_{t_1}}\right)
+      $$</p>
+      <p><strong>Why log returns are preferred in quant finance:</strong> while arithmetic returns are simple, <strong>log returns are additive over time</strong>. The cumulative log return over multiple subperiods equals the sum of the subperiod log returns:</p>
+      <p>$$
+        \tilde{r}_{0, t_n} = \sum_{i=1}^{n} \tilde{r}_{t_{i-1}, t_i}
+      $$</p>
+      <p>This property is mathematically elegant and crucial for portfolio modeling, compounding, and time-series analysis. If prices follow a <strong>lognormal distribution</strong>, then log returns are <strong>normally distributed</strong>, which simplifies many statistical methods.</p>
+
+      <h2>Volatility: Measuring Uncertainty</h2>
+      <p>Return measures what you earn, but <strong>volatility</strong> measures how uncertain that return is.</p>
+
+      <h3>Standard Deviation and Variance</h3>
+      <p>The <strong>standard deviation (σ)</strong> is the most common measure of volatility. It quantifies how far individual returns deviate from the average.</p>
+      <p>$$
+        \sigma = \sqrt{\text{Variance}}
+      $$</p>
+      <p>Variance (\( \sigma^2 \)) removes the direction (positive or negative) of deviations, focusing purely on their magnitude. This ensures volatility always measures the <strong>size</strong> of fluctuations, not their direction.</p>
+
+      <h3>Price Range</h3>
+      <p>For intraday traders, a simpler measure of volatility is the <strong>price range</strong>:</p>
+      <p>$$
+        \text{Price Range} = \text{High Price} - \text{Low Price}
+      $$</p>
+      <p>This approach doesn’t rely on returns and can be useful for capturing short-term market movement intensity.</p>
+
+      <h2>Risk-Adjusted Metrics: Getting More Bang for Your Buck</h2>
+      <p>Raw return numbers can be misleading without accounting for risk. Two key ratios help standardize performance by incorporating volatility.</p>
+
+      <h3>Coefficient of Variation (CV)</h3>
+      <p>The <strong>coefficient of variation (CV)</strong> measures volatility per unit of return:</p>
+      <p>$$
+        \text{CV} = \frac{\sigma_P}{r_P}
+      $$</p>
+      <p>A <strong>lower CV</strong> indicates more efficient performance — less volatility for the same level of return.</p>
+
+      <h3>The Sharpe Ratio</h3>
+  <p>The <strong>Sharpe Ratio</strong> takes this a step further by adjusting for the <strong>risk-free rate</strong> (\( r_{rf} \)) : the return that could be earned with zero risk.</p>
+      <p>$$
+        \text{Sharpe Ratio} = \text{SR} = \frac{r_P - r_{rf}}{\sigma_P}
+      $$</p>
+      <p>Where:</p>
+      <ul>
+        <li>\( r_P \) is the expected portfolio return</li>
+        <li>\( r_{rf} \) is the risk-free rate</li>
+        <li>\( \sigma_P \) is the portfolio standard deviation (volatility)</li>
+      </ul>
+      <p>A <strong>higher Sharpe ratio</strong> means better risk-adjusted performance : more reward per unit of risk. It enables fair comparison across asset classes like equities, bonds, and cryptocurrencies.</p>
+
+      <h2>Conclusion</h2>
+      <p>Performance measurement is both an art and a science. Arithmetic returns show raw profit, while log returns enable mathematically consistent modeling. Volatility defines uncertainty, and ratios like the <strong>Sharpe ratio</strong> quantify how efficiently an investment converts that uncertainty into return.</p>
+      <p>For a financial engineer, mastering these measures means seeing beyond simple percentages, and identifying which investments truly deliver <strong>the best reward for the risk taken</strong>.</p>
+    </div>
+    <script>
+      // same grain overlay used across the portfolio for consistency
+      const canvas = document.getElementById("canvas");
+      let viewWidth,
+        viewHeight,
+        ctx,
+        patternCanvas,
+        patternCtx,
+        patternData,
+        frame = 0;
+      const patternSize = 64,
+        patternScaleX = 2,
+        patternScaleY = 2,
+        patternRefreshInterval = 6,
+        patternAlpha = 18,
+        patternPixelDataLength = patternSize * patternSize * 4;
+
+      function initCanvas() {
+        viewWidth = canvas.width = canvas.clientWidth;
+        viewHeight = canvas.height = canvas.clientHeight;
+        ctx = canvas.getContext("2d");
+        ctx.scale(patternScaleX, patternScaleY);
+      }
+
+      function initGrain() {
+        patternCanvas = document.createElement("canvas");
+        patternCanvas.width = patternSize;
+        patternCanvas.height = patternSize;
+        patternCtx = patternCanvas.getContext("2d");
+        patternData = patternCtx.createImageData(patternSize, patternSize);
+      }
+
+      function update() {
+        for (let i = 0; i < patternPixelDataLength; i += 4) {
+          const value = (Math.random() * 255) | 0;
+          patternData.data[i] = value;
+          patternData.data[i + 1] = value;
+          patternData.data[i + 2] = value;
+          patternData.data[i + 3] = patternAlpha;
+        }
+        patternCtx.putImageData(patternData, 0, 0);
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, viewWidth, viewHeight);
+        ctx.fillStyle = ctx.createPattern(patternCanvas, "repeat");
+        ctx.fillRect(0, 0, viewWidth, viewHeight);
+      }
+
+      function loop() {
+        if (++frame % patternRefreshInterval === 0) {
+          update();
+          draw();
+        }
+        requestAnimationFrame(loop);
+      }
+
+      window.addEventListener("load", () => {
+        initCanvas();
+        initGrain();
+        requestAnimationFrame(loop);
+      });
+      window.addEventListener("resize", initCanvas);
+    </script>
+  </body>
+</html>
